@@ -2,8 +2,8 @@
   "appcast" : "https://raw.githubusercontent.com/oodesign/merge-duplicate-symbols/master/appcast.xml",
   "commands" : [
     {
-      "script" : "MergeDuplicateSymbols.cocoascript",
-      "name" : "Merge duplicate symbols",
+      "script" : "MergeDuplicateSymbols_custom.cocoascript",
+      "name" : "Merge duplicate symbols (with name)",
       "handlers" : {
         "run" : "onRun"
       },
@@ -12,16 +12,16 @@
     }
   ],
   "menu" : {
-    "title" : "Merge duplicate symbols",
+    "title" : "Merge duplicate symbols (with name)",
     "items" : [
       "com.bohemiancoding.sketch.runscriptidentifier"
     ]
   },
   "identifier" : "com.example.sketch.8f55e971-28b8-4d86-bc10-729e8a4e4dfc",
   "version" : "3.0.0",
-  "name" : "Merge duplicate symbols",
+  "name" : "Merge duplicate symbols (with name)",
   "authorEmail" : "oodesignux@gmail.com",
-  "description": "Sketch.app plugin to merge symbols with the same name",
+  "description": "Sketch.app plugin to merge symbols with the same name and show the name",
   "author": "oodesign",
   "homepage": "https://github.com/oodesign/merge-duplicate-symbols"
 }
