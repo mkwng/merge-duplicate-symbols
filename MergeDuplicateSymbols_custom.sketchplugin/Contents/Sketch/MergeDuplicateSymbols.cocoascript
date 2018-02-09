@@ -10,7 +10,7 @@ function GetSymbolsByName(name){
         if(symbolName.localeCompare(name) == 0)
         {
             matchingSymbols.push(allSymbols[i]);
-        }
+        }        
     }
     return matchingSymbols;
 }
@@ -89,10 +89,10 @@ function getSymbolOverrides(context,symbolMaster) {
 }
 
 function FindOverrideSymbolID(instance, overrides,symbolOverrides,symbolMaster, level){
-    for (var key in overrides) {
+    for (var key in overrides) {    
         var symbolID = overrides[key]["symbolID"];
         if(symbolID == null)
-        {
+        {    
             FindOverrideSymbolID(instance, overrides[key], symbolOverrides, symbolMaster, level+1);
         }
         else
@@ -122,19 +122,19 @@ function CreateWindow(symbolName, duplicatedSymbolsByName, instancesPerSymbol, t
     var okbutton = window.addButtonWithTitle("OK");
     window.addButtonWithTitle("Don't merge this one");
     window.addButtonWithTitle("Continue later");
-
+      
 
     var cells = matrix.cells();
-
+           
     for(var j=0;j<duplicatedSymbolsByName.length;j++){
         var exportRequest = MSExportRequest.exportRequestsFromExportableLayer_inRect_useIDForName_(
             duplicatedSymbolsByName[j],
             duplicatedSymbolsByName[j].absoluteInfluenceRect(),
             false
             ).firstObject()
-
+  
         exportRequest.format = "png"
-
+        
         var scaleX = cellWidth / exportRequest.rect().size.width;
         var scaleY = (cellHeight-20) / exportRequest.rect().size.height;
 
@@ -142,25 +142,29 @@ function CreateWindow(symbolName, duplicatedSymbolsByName, instancesPerSymbol, t
             exportRequest.scale = scaleX;
         else
             exportRequest.scale = scaleY;
-
+            
         var colorSpace = NSColorSpace.sRGBColorSpace()
         var exporter = MSExporter.exporterForRequest_colorSpace_(exportRequest, colorSpace)
         var imageRep = exporter.bitmapImageRep()
 
         var image = NSImage.alloc().init().autorelease();
         image.addRepresentation(imageRep);
-
+        
         cells.objectAtIndex(j).setImagePosition(NSImageAbove);
         cells.objectAtIndex(j).setImage(image);
+<<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
 <<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
         cells.objectAtIndex(j).setTitle(instancesPerSymbol[j].length+" instances (and "+overridesPerSymbol[j].length+" overrides) "+duplicatedSymbolsByName[j].name());
 =======
         cells.objectAtIndex(j).setTitle(instancesPerSymbol[j].length+" instances ("+(instancesPerSymbol[j].length*100/totalInstances)+"%)");
 >>>>>>> parent of fe27bbb... Merge pull request #15 from oodesign/Merge-also-Overrides:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+=======
+        cells.objectAtIndex(j).setTitle(instancesPerSymbol[j].length+" instances (and "+overridesPerSymbol[j].length+" overrides)");
+>>>>>>> parent of 53e3236... adding symbol name:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
     }
     var scrollHeight = matrixHeight;
     if(matrixHeight > 400)
-        scrollHeight = 400;
+        scrollHeight = 400;   
 
     var listContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0,0,cellWidth,scrollHeight)];
 
@@ -178,18 +182,26 @@ function MergeSymbols(duplicatedSymbolsByName, instancesPerSymbol, symbolToKeep)
         if(i!=symbolToKeep)
         {
 <<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+<<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
 
 =======
 >>>>>>> parent of fe27bbb... Merge pull request #15 from oodesign/Merge-also-Overrides:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+=======
+            
+>>>>>>> parent of 53e3236... adding symbol name:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
             var instancesOfSymbol = instancesPerSymbol[i];
             for(var k=0;k<instancesOfSymbol.length;k++){
 <<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+<<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
                 instancesOfSymbol[k].symbolID = duplicatedSymbolsByName[symbolToKeep].symbolID();
+=======
+                instancesOfSymbol[k].symbolID = duplicatedSymbolsByName[symbolToKeep].symbolID();            
+>>>>>>> parent of 53e3236... adding symbol name:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
             }
             for(var k=0;k<overridesOfSymbol.length;k++){
-
+                    
                 var overrides = NSMutableDictionary.dictionaryWithDictionary(overridesOfSymbol[k].overrides());
-                var keys = overrides.allKeys();
+                var keys = overrides.allKeys();                
                 for (var l = 0; l < keys.count(); l++) {
                     var keyIndex = keys.objectAtIndex(l);
                     SetOverrideSymbolID(overrides[keyIndex], duplicatedSymbolsByName[symbolToKeep].symbolID(), 0);
@@ -235,8 +247,8 @@ for(var i=0; i < symbols.count(); i++){
     {
         artboardNames.push(recomposedSymbolName);
     }
-    else{
-        if(duplicatedSymbols.indexOf(recomposedSymbolName)<0)
+    else{  
+        if(duplicatedSymbols.indexOf(recomposedSymbolName)<0)      
             duplicatedSymbols.push(recomposedSymbolName);
     }
 }
@@ -252,7 +264,7 @@ for (var i = 0; i < duplicatedSymbols.length; i++) {
             1
     );
     matrix.setCellSize(CGSizeMake(cellWidth, cellHeight));
-
+    
     var totalInstances = 0;
     var instancesPerSymbol = FindSymbolInstances(duplicatedSymbolsByName[j], duplicatedSymbolsByName);
 
@@ -260,20 +272,24 @@ for (var i = 0; i < duplicatedSymbols.length; i++) {
         totalInstances+=instancesPerSymbol[p].length;
 
 <<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+<<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
     var window = CreateWindow(duplicatedSymbols[i], duplicatedSymbolsByName, instancesPerSymbol, overridesPerSymbol, totalInstances, totalOverrides, matrix, cellWidth, cellHeight, matrixHeight);
 =======
     var window = CreateWindow(duplicatedSymbols[i], duplicatedSymbolsByName, instancesPerSymbol, totalInstances, matrix, cellWidth, cellHeight, matrixHeight); 
 >>>>>>> parent of fe27bbb... Merge pull request #15 from oodesign/Merge-also-Overrides:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+=======
+    var window = CreateWindow(duplicatedSymbols[i], duplicatedSymbolsByName, instancesPerSymbol, overridesPerSymbol, totalInstances, totalOverrides, matrix, cellWidth, cellHeight, matrixHeight); 
+>>>>>>> parent of 53e3236... adding symbol name:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
     var responseCode = handleAlertResponse(window, window.runModal());
-
+    
     var symbolToKeep = matrix.cells().indexOfObject(matrix.selectedCell());
-
+        
     if(responseCode == "OK"){
         MergeSymbols(duplicatedSymbolsByName, instancesPerSymbol, symbolToKeep);
         mergedSymbols++;
     }
     else if(responseCode == "CONTINUE LATER")
-    {
+    {    	
     	[doc showMessage: "Cool, we'll continue later!  Meanwhile, "+mergedSymbols+GetTextBasedOnCount(mergedSymbols)+"merged"];
         continuous = false;
     }
@@ -291,6 +307,7 @@ if(continuous)
         [doc showMessage: "It seems there are no symbols (with the same name) to merge"];
 }
 <<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+<<<<<<< HEAD:MergeDuplicateSymbols_custom.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
 
 
 
@@ -300,3 +317,10 @@ if(continuous)
 };
           
 >>>>>>> parent of fe27bbb... Merge pull request #15 from oodesign/Merge-also-Overrides:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
+=======
+      
+	
+          
+          };
+          
+>>>>>>> parent of 53e3236... adding symbol name:MergeDuplicateSymbols.sketchplugin/Contents/Sketch/MergeDuplicateSymbols.cocoascript
